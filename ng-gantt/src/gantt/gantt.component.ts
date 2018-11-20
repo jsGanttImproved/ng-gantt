@@ -1,7 +1,8 @@
 import {
   Component, ElementRef, Input, OnInit, ViewChild
 } from '@angular/core';
-import { JSGantt } from 'jsgantt-improved';
+// import { JSGantt } from 'jsgantt-improved';
+import * as JSGantt from 'jsgantt-improved';
 console.log(JSGantt);
 @Component({
   // tslint:disable-next-line:component-selector
@@ -38,7 +39,7 @@ export class GanttEditorComponent implements OnInit {
       optionsBefore = this.editor.options;
     }
     // document.getElementById('embedded-Gantt')
-    const g = this.editor = new JSGantt.GanttChart(this.ganttEditorContainer.nativeElement, 'week');
+    const g = this.editor = new (<any>JSGantt).GanttChart(this.ganttEditorContainer.nativeElement, 'week');
 
     if (g.getDivId() != null) {
 
@@ -56,9 +57,10 @@ export class GanttEditorComponent implements OnInit {
         // Even with setUseSingleCell using Hour format on such a large chart can cause issues in some browsers
         vFormatArr: ['Day', 'Week', 'Month', 'Quarter'],
       });
-      if (this._data) {
+      if (this._data && this._data.forEach) {
         this._data.forEach(row => {
-          g.AddItemObject(row);
+          row.pGantt = g;
+          g.AddTaskItemObject(row);
         })
       }
       g.Draw();
