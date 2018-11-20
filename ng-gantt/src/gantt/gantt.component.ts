@@ -23,7 +23,7 @@ export class GanttEditorComponent implements OnInit {
   set data(value: Object) {
     this._data = value;
     if (this.editor) {
-      this.editor.destroy();
+      this.destroy();
       this.ngOnInit();
     }
   }
@@ -72,7 +72,7 @@ export class GanttEditorComponent implements OnInit {
 
   public setOptions(newOptions: GanttEditorOptions) {
     if (this.editor) {
-      this.editor.destroy();
+      this.destroy();
     }
     this.optionsChanged = true;
     this.options = newOptions;
@@ -80,7 +80,7 @@ export class GanttEditorComponent implements OnInit {
   }
 
   public destroy() {
-    this.editor.destroy();
+    // this.editor.destroy();
   }
 }
 
