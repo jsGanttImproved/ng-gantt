@@ -17,7 +17,7 @@
       "dom"
     ],
     "paths": {
-      "ang-jsoneditor": [ "dist/ng-gantt" ]
+      "ng-gantt": [ "dist/ng-gantt" ]
     }
   },
   "exclude": [

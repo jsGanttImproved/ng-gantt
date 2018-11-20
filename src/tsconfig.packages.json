@@ -2,7 +2,7 @@
   "extends": "../tsconfig.json",
   "angularCompilerOptions": {
     "paths": {
-      "ang-jsoneditor": [ "../dist/ang-jsoneditor" ]
+      "ng-gantt": [ "../dist/ng-gantt" ]
     }
   },
   "compilerOptions": {
@@ -11,7 +11,7 @@
     "baseUrl": "",
     "types": [],
     "paths": {
-      "ang-jsoneditor": [ "../dist/ang-jsoneditor" ]
+      "ng-gantt": [ "../dist/ng-gantt" ]
     }
   },
   "exclude": [

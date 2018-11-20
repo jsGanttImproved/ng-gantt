@@ -1,8 +1,7 @@
 import {
   Component, ElementRef, Input, OnInit, ViewChild
 } from '@angular/core';
-// import JSGantt = require('jsgantt-improved');
-import {JSGantt} from 'jsgantt-improved';
+import { JSGantt } from 'jsgantt-improved';
 console.log(JSGantt);
 @Component({
   // tslint:disable-next-line:component-selector
@@ -17,7 +16,7 @@ export class GanttEditorComponent implements OnInit {
 
   @ViewChild('ganttEditorContainer') ganttEditorContainer: ElementRef;
 
-  private _data: Object = {};
+  private _data;
 
   @Input() options: GanttEditorOptions = new GanttEditorOptions();
   @Input('data')
@@ -45,10 +44,6 @@ export class GanttEditorComponent implements OnInit {
 
       // JSGantt.parseJSON('./fixes/data.json', g);
 
-      // SET LANG FROM INPUT
-      // lang = e && e.target ? e.target.value : 'pt';
-      // delay = document.getElementById('delay').value;
-
       g.setOptions({
         vCaptionType: 'Complete',  // Set to Show Caption : None,Caption,Resource,Duration,Complete,
         vQuarterColWidth: 36,
@@ -57,13 +52,15 @@ export class GanttEditorComponent implements OnInit {
         vWeekMinorDateDisplayFormat: 'dd mon', // Set format to display dates in the "Minor" header of the "Week" view
         vShowTaskInfoLink: 1, // Show link in tool tip (0/1)
         vShowEndWeekDate: 0,  // Show/Hide the date for the last day of the week in header for
-        // daily view (1/0)
-        // Set the threshold at which we will only use one cell per table row (0 disables).
-        // Helps with rendering performance for large charts.
         vUseSingleCell: 10000,
         // Even with setUseSingleCell using Hour format on such a large chart can cause issues in some browsers
         vFormatArr: ['Day', 'Week', 'Month', 'Quarter'],
       });
+      if (this._data) {
+        this._data.forEach(row => {
+          g.AddItemObject(row);
+        })
+      }
       g.Draw();
     }
   }
@@ -84,14 +81,6 @@ export class GanttEditorComponent implements OnInit {
   public destroy() {
     this.editor.destroy();
   }
-}
-
-export type GanttEditorMode = 'tree' | 'view' | 'form' | 'code' | 'text';
-
-export interface GanttEditorTreeNode {
-  field: String,
-  value: String,
-  path: String[]
 }
 
 export class GanttEditorOptions {

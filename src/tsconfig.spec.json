@@ -10,7 +10,7 @@
       "node"
     ],
     "paths": {
-      "ang-jsoneditor": [ "../ang-jsoneditor/src/public_api.ts" ]
+      "ng-gantt": [ "../ng-gantt/src/public_api.ts" ]
     }
   },
   "files": [

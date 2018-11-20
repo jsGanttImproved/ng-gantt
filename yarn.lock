@@ -4092,17 +4092,6 @@ json5@^0.5.0:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/json5/-/json5-0.5.1.tgz#1eade7acc012034ad84e2396767ead9fa5495821"
 
-jsoneditor@^5.19.0:
-  version "5.19.0"
-  resolved "https://registry.yarnpkg.com/jsoneditor/-/jsoneditor-5.19.0.tgz#89fc651873e2c25888d8c034059f8a1eb4a4cde9"
-  dependencies:
-    ajv "5.5.2"
-    brace "0.11.0"
-    javascript-natural-sort "0.7.1"
-    jmespath "0.15.0"
-    mobius1-selectr "2.4.1"
-    picomodal "3.0.0"
-
 jsonfile@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/jsonfile/-/jsonfile-4.0.0.tgz#8771aae0799b64076b76640fca058f9c10e33ecb"
