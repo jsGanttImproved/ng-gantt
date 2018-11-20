@@ -10,23 +10,18 @@
 
 <h3>Live Reload</h3>
 <button (click)="changeData()">New Data</button>
-<!-- <button (click)="changeObject()">Change Data</button> -->
-Random Number: {{data.randomNumber}}
 
 <h3>Custom Options</h3>
-<button (click)="setAce()">Customize Ace</button>
-<button (click)="toggleNav()">Navigation Bar</button>
-<button (click)="toggleStatus()">Status Bar</button>
-
+<!-- <button (click)="setAce()">Customize Ace</button> -->
 
 <hr/>
 
 <h3 *ngIf="editorOptions.language">Force Language to {{editorOptions.language}}</h3>
 <div style="height:300px;">
-  <json-editor [options]="editorOptions" [data]="data" #editor></json-editor>
+  <ng-gantt [options]="editorOptions" [data]="data" #editor></ng-gantt>
 </div>
 
 <h3>Multiple jsgantt</h3>
 <div style="height:600px;">
-  <json-editor [options]="editorOptions" [data]="data2" #editorTwo></json-editor>
+  <ng-gantt [options]="editorOptions" [data]="data2" #editorTwo></ng-gantt>
 </div>

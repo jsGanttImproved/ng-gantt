@@ -1,18 +1,17 @@
 # Angular Gantt Editor
 
-Angular Gantt Editor (wrapper for [jsgantt](https://github.com/josdejong/jsgantt)). View/Edit Gantt file with formatting.
+Angular Gantt Editor (wrapper for [jsgantt-improved](https://github.com/mariohmol/jsgantt-improved)). View/Edit Gantt file with formatting.
 
 [StackBlitz template](https://stackblitz.com/edit/angular-ng-gantt)
 
 Working with latest Angular 6. 
 
-![Demo Image](/src/assets/printDemo.png)
 
 ## Installation
 
 To install this library with npm, run below command:
 
-$ npm install --save jsgantt ang-jsgantt
+$ npm install --save jsgantt-improved ng-gantt
 
 ## Usage
 
@@ -57,7 +56,6 @@ export class AppComponent {
     this.editorOptions.modes = ['code', 'text', 'tree', 'view']; // set all allowed modes
     //this.options.mode = 'code'; //set only one mode
       
-      this.data = {"products":[{"name":"car","product":[{"name":"honda","model":[{"id":"civic","name":"civic"},{"id":"accord","name":"accord"},{"id":"crv","name":"crv"},{"id":"pilot","name":"pilot"},{"id":"odyssey","name":"odyssey"}]}]}]}
   }
 
 }
@@ -65,15 +63,12 @@ export class AppComponent {
 Note : For better styling, add below line to your main style.css file
 
 ```ts
-@import "~jsgantt/dist/jsgantt.min.css";
+@import "~jsgantt-improved/dist/jsgantt.css";
 ```
 
 # Demo
 
 Demo component files are included in Git Project.
-
-Demo Project with a lot of different implementations (ngInit, change event and others):
-[https://github.com/mariohmol/ang-jsgantt/tree/master/src/app/demo)
 
 When publishing it to npm, look over this docs: https://docs.npmjs.com/misc/developers
 

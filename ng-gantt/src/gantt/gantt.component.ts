@@ -6,7 +6,7 @@ import {JSGantt} from 'jsgantt-improved';
 console.log(JSGantt);
 @Component({
   // tslint:disable-next-line:component-selector
-  selector: 'gantt-editor',
+  selector: 'ng-gantt',
   template: '<div [id]="id" #ganttEditorContainer></div>'
 })
 
