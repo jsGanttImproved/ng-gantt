@@ -4,12 +4,11 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "build:app": "cp -R dist/ng-gantt src/ng-gantt && ng build --project packages && rimraf src/ng-gantt",
     "build:lib": "rimraf dist && ng-packagr -p ng-gantt/package.json",
-    "publish": "npm run build:lib && cd dist/ng-gantt && npm publish",
+    "publish-npm": "npm run build:lib && cd dist/ng-gantt && npm publish",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
@@ -25,7 +24,7 @@
     "@angular/platform-browser-dynamic": "6.0.9",
     "@angular/router": "6.0.9",
     "core-js": "^2.4.1",
-    "jsgantt-improved": "^1.8.5",
+    "jsgantt-improved": "^1.8.6",
     "rxjs": "^6.0.0-beta.1",
     "webpack": "^4.16.1",
     "zone.js": "0.8.26"
