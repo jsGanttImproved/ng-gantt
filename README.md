@@ -54,11 +54,24 @@ export class AppComponent {
 
   constructor() { 
     this.editorOptions = new GanttEditorOptions()
-    this.editorOptions.modes = ['code', 'text', 'tree', 'view']; // set all allowed modes
-    //this.options.mode = 'code'; //set only one mode
-      
+     this.data2 = [{
+      'pID': 1,
+      'pName': 'Define Chart API',
+      'pStart': '',
+      'pEnd': '',
+      'pClass': 'ggroupblack',
+      'pLink': '',
+      'pMile': 0,
+      'pRes': 'Brian',
+      'pComp': 0,
+      'pGroup': 1,
+      'pParent': 0,
+      'pOpen': 1,
+      'pDepend': '',
+      'pCaption': '',
+      'pNotes': 'Some Notes text'
+    }]; 
   }
-
 }
 ```
 Note : For better styling, add below line to your main style.css file
