@@ -1,6 +1,6 @@
 {
   "name": "ng-gantt",
-  "version": "1.8.7",
+  "version": "1.8.8",
   "license": "MIT",
   "homepage": "https://github.com/mariohmol/ng-gantt",
   "repository": {
@@ -18,7 +18,7 @@
   "peerDependencies": {
     "@angular/core": ">=6.0.0-rc.5",
     "@angular/common": ">=6.0.0-rc.5",
-    "jsgantt-improved": "^1.8.6"
+    "jsgantt-improved": "^1.8.7"
   },
   "ngPackage": {
     "$schema": "./node_modules/ng-packagr/ng-package.schema.json",

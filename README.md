@@ -6,6 +6,7 @@ Angular Gantt Editor (wrapper for [jsgantt-improved](https://github.com/mariohmo
 
 Working with latest Angular 6. 
 
+![Demo Image](/src/demo.png)
 
 ## Installation
 

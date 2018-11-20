@@ -3,13 +3,12 @@ import {
 } from '@angular/core';
 // import { JSGantt } from 'jsgantt-improved';
 import * as JSGantt from 'jsgantt-improved';
-console.log(JSGantt);
+
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'ng-gantt',
   template: '<div [id]="id" #ganttEditorContainer></div>'
 })
-
 export class GanttEditorComponent implements OnInit {
   private editor: any;
   public id = 'anggantteditor' + Math.floor(Math.random() * 1000000);
