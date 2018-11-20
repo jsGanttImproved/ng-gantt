@@ -1,0 +1,31 @@
+{
+  "name": "ng-gantt",
+  "version": "1.6.2",
+  "license": "MIT",
+  "homepage": "https://github.com/mariohmol/ng-gantt",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mariohmol/ng-gantt.git"
+  },
+  "author": "Manish Sodavadiya <manish_it56@yahoo.com>, Mario Mol <mariohmol@gmail.com>",
+  "keywords": [
+    "angular",
+    "jsgantt",
+    "ng-gantt",
+    "jsgantt-improved",
+    "gantt"
+  ],
+  "peerDependencies": {
+    "@angular/core": ">=6.0.0-rc.5",
+    "@angular/common": ">=6.0.0-rc.5",
+    "jsoneditor": "^5.19.0"
+  },
+  "ngPackage": {
+    "$schema": "./node_modules/ng-packagr/ng-package.schema.json",
+    "workingDirectory": "../.ng_build",
+    "lib": {
+      "entryFile": "src/public_api.ts"
+    },
+    "dest": "../dist/ng-gantt"
+  }
+}
