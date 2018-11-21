@@ -55,6 +55,7 @@ export class GanttEditorComponent implements OnInit {
         vUseSingleCell: 10000,
         // Even with setUseSingleCell using Hour format on such a large chart can cause issues in some browsers
         vFormatArr: ['Day', 'Week', 'Month', 'Quarter'],
+        ...optionsBefore
       });
       if (this._data && this._data.forEach) {
         this._data.forEach(row => {

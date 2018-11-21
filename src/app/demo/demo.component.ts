@@ -8,7 +8,7 @@ import { GanttEditorComponent, GanttEditorOptions } from 'ng-gantt';
 })
 export class DemoComponent implements OnInit {
 
-  public editorOptions: GanttEditorOptions;
+  public editorOptions: {};
   public data: any;
   public data2: any;
 
@@ -16,8 +16,11 @@ export class DemoComponent implements OnInit {
   @ViewChild('editorTwo') editorTwo: GanttEditorComponent;
 
   constructor() {
-    this.editorOptions = new GanttEditorOptions();
-    this.initEditorOptions();
+    this.editorOptions = {
+      vShowPlanStartDate: 1,
+      vShowPlanEndDate: 1,
+      vShowCost: 1,
+    };
   }
 
   ngOnInit() {
@@ -26,7 +29,7 @@ export class DemoComponent implements OnInit {
 
     this.data2 = [{
       'pID': 1,
-      'pName': 'Define Chart API',
+      'pName': 'Define Chart API v2',
       'pStart': '',
       'pEnd': '',
       'pClass': 'ggroupblack',
@@ -48,10 +51,6 @@ export class DemoComponent implements OnInit {
   change() {
     console.log('change:', this.editor);
     console.log('change2:', this.editorTwo);
-  }
-
-  initEditorOptions() {
-
   }
 
   setLanguage(lang) {
@@ -90,7 +89,7 @@ export class DemoComponent implements OnInit {
   initialData() {
     return [{
       'pID': 1,
-      'pName': 'Define Chart API',
+      'pName': 'Define Chart API v1',
       'pStart': '',
       'pEnd': '',
       'pClass': 'ggroupblack',
@@ -161,6 +160,8 @@ export class DemoComponent implements OnInit {
       'pName': 'Task Variables',
       'pStart': '2017-03-06',
       'pEnd': '2017-03-11',
+      'pPlanStart': '2017-03-03',
+      'pPlanEnd': '2017-03-09',
       'pClass': 'gtaskred',
       'pLink': '',
       'pMile': 0,
@@ -176,8 +177,10 @@ export class DemoComponent implements OnInit {
     {
       'pID': 123,
       'pName': 'Task by Minute/Hour',
-      'pStart': '2017-03-09',
-      'pEnd': '2017-03-14 12: 00',
+      'pStart': '',
+      'pEnd': '',
+      'pPlanStart': '2017-03-01',
+      'pPlanEnd': '2017-03-15 12:00',
       'pClass': 'gtaskyellow',
       'pLink': '',
       'pMile': 0,
@@ -188,7 +191,8 @@ export class DemoComponent implements OnInit {
       'pOpen': 1,
       'pDepend': '',
       'pCaption': '',
-      'pNotes': ''
+      'pNotes': '',
+      'pCost': 1000
     },
     {
       'pID': 124,
