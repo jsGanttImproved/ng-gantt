@@ -1,5 +1,8 @@
 # Angular Gantt Editor
 
+
+[![Build Status](https://travis-ci.org/mariohmol/ng-gantt.svg?branch=master)](https://travis-ci.org/mariohmol/ng-gantt)
+
 Angular Gantt Editor (wrapper for [jsgantt-improved](https://github.com/mariohmol/jsgantt-improved)). View/Edit Gantt file with formatting.
 
 [StackBlitz template](https://stackblitz.com/edit/angular-ng-gantt)
