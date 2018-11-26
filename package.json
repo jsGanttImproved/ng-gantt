@@ -12,7 +12,7 @@
     "publish-npm": "npm run build:lib && cd dist/ng-gantt && npm publish",
     "reload": "npm run build:lib && npm run build && npm run start",
     "dev": "cd dist/app && http-server",
-    "test": "npm run test && npm run e2e",
+    "test": "ng test --watch=false && npm run e2e",
     "unittest": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
