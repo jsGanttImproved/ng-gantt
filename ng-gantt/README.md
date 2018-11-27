@@ -1,6 +1,6 @@
 # Angular Gantt Editor
 
-Angular Gantt Editor (wrapper for [jsgantt-improved](https://github.com/mariohmol/jsgantt-improved)). View/Edit Gantt file with formatting.
+Angular Gantt Editor (wrapper for [jsgantt-improved](https://github.com/jsGanttImproved/jsgantt-improved)). View/Edit Gantt file with formatting.
 
 [StackBlitz template](https://stackblitz.com/edit/angular-ng-gantt)
 
