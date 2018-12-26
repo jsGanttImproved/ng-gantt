@@ -8,19 +8,32 @@ import { GanttEditorComponent, GanttEditorOptions } from 'ng-gantt';
 })
 export class DemoComponent implements OnInit {
 
-  public editorOptions: {};
+  public editorOptions: any = {};
   public data: any;
   public data2: any;
+
+  vUseSingleCell = '0';
+  vShowRes = '0';
+  vShowCost = '0';
+  vShowComp = '0';
+  vShowDur = '0';
+  vShowStartDate = '0';
+  vShowEndDate = '0';
+  vShowPlanStartDate = '0';
+  vShowPlanEndDate = '0';
+  vShowEndWeekDate = '0';
+  vShowTaskInfoLink = '0';
+  vDebug = 'false';
+  vEditable = 'false';
+  vUseSort = 'false';
+  vLang = 'en';
+  delay = 150;
 
   @ViewChild('editor') editor: GanttEditorComponent;
   @ViewChild('editorTwo') editorTwo: GanttEditorComponent;
 
   constructor() {
-    this.editorOptions = {
-      vShowPlanStartDate: 1,
-      vShowPlanEndDate: 1,
-      vShowCost: 1,
-    };
+
   }
 
   ngOnInit() {
@@ -45,7 +58,84 @@ export class DemoComponent implements OnInit {
       'pNotes': 'Some Notes text'
     }];
 
+    const vAdditionalHeaders = {
+      category: {
+        title: 'Category'
+      },
+      sector: {
+        title: 'Sector'
+      }
+    };
+
+
+    this.editorOptions = {
+      vCaptionType: 'Complete',  // Set to Show Caption : None,Caption,Resource,Duration,Complete,
+      vQuarterColWidth: 36,
+      vDateTaskDisplayFormat: 'day dd month yyyy', // Shown in tool tip box
+      vDayMajorDateDisplayFormat: 'mon yyyy - Week ww', // Set format to display dates in the "Major" header of the "Day" view
+      vWeekMinorDateDisplayFormat: 'dd mon', // Set format to display dates in the "Minor" header of the "Week" view
+      vLang: this.vLang,
+      vUseSingleCell: this.vUseSingleCell,
+      vShowRes: parseInt(this.vShowRes, 10),
+      vShowCost: parseInt(this.vShowCost, 10),
+      vShowComp: parseInt(this.vShowComp, 10),
+      vShowDur: parseInt(this.vShowDur, 10),
+      vShowStartDate: parseInt(this.vShowStartDate, 10),
+      vShowEndDate: parseInt(this.vShowEndDate, 10),
+      vShowPlanStartDate: parseInt(this.vShowPlanStartDate, 10),
+      vShowPlanEndDate: parseInt(this.vShowPlanEndDate, 10),
+      vShowTaskInfoLink: parseInt(this.vShowTaskInfoLink, 10), // Show link in tool tip (0/1)
+      // Show/Hide the date for the last day of the week in header for daily view (1/0)
+      vShowEndWeekDate: parseInt(this.vShowEndWeekDate, 10),
+      vAdditionalHeaders: vAdditionalHeaders,
+      vEvents: {
+        taskname: console.log,
+        res: console.log,
+        dur: console.log,
+        comp: console.log,
+        start: console.log,
+        end: console.log,
+        planstart: console.log,
+        planend: console.log,
+        cost: console.log
+      },
+      vEventsChange: {
+        taskname: this.editValue.bind(this, this.data),
+        res: this.editValue.bind(this, this.data),
+        dur: this.editValue.bind(this, this.data),
+        comp: this.editValue.bind(this, this.data),
+        start: this.editValue.bind(this, this.data),
+        end: this.editValue.bind(this, this.data),
+        planstart: this.editValue.bind(this, this.data),
+        planend: this.editValue.bind(this, this.data),
+        cost: this.editValue.bind(this, this.data)
+      },
+      vResources: [
+        { id: 0, name: 'Anybody' },
+        { id: 1, name: 'Mario' },
+        { id: 2, name: 'Henrique' },
+        { id: 3, name: 'Pedro' }
+      ],
+      vEventClickRow: console.log,
+      vTooltipDelay: this.delay,
+      vDebug: this.vDebug === 'true',
+      vEditable: this.vEditable === 'true',
+      vUseSort: this.vUseSort === 'true',
+      vFormatArr: ['Day', 'Week', 'Month', 'Quarter'],
+    };
+    this.editor.setOptions(this.editorOptions);
     // this.editorOptions.onChange = this.change.bind(this);
+  }
+
+  editValue(list, task, event, cell, column) {
+    // tslint:disable-next-line:triple-equals
+    const found = list.find(item => item.pID == task.getOriginalID());
+    if (!found) {
+      return;
+    } else {
+      found[column] = event ? event.target.value : '';
+    }
+    console.log(found);
   }
 
   change() {
@@ -54,7 +144,8 @@ export class DemoComponent implements OnInit {
   }
 
   setLanguage(lang) {
-
+    this.editorOptions.vLang = lang;
+    this.editor.setOptions(this.editorOptions);
   }
 
   customLanguage() {

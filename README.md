@@ -6,9 +6,9 @@ Angular Gantt Editor (wrapper for [jsgantt-improved](https://github.com/jsGanttI
 
 [StackBlitz template](https://stackblitz.com/edit/angular-ng-gantt)
 
-Working with latest Angular 6. 
+Working with latest Angular 7. 
 
-![Demo Image](/src/demo.png)
+![Demo Image](/src/demo.gif)
 
 ## Installation
 

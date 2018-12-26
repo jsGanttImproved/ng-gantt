@@ -6,6 +6,116 @@
 <button (click)="customLanguage()">Language Custom</button>
 <hr/>
 
+<h3>Options</h3>
+
+<label for="">Editable</label>
+<select [(ngModel)]="vEditable" (change)="ngOnInit()" placeholder="Editable">
+  <option value="false">No</option>
+  <option value="true">Yes</option>
+</select>
+
+<input type="text" [(ngModel)]="delay" (change)="ngOnInit()" placeholder="Tooltip timeout">
+
+<h4>Show / Hide columns or informations</h4>
+<label for="">Show Resource</label>
+<select [(ngModel)]="vShowRes" (change)="ngOnInit()" placeholder="Show Resource">
+  <option value="0">No</option>
+  <option value="1">Yes</option>
+</select>
+
+--
+
+
+<label for="">Show Cost</label>
+<select [(ngModel)]="vShowCost" (change)="ngOnInit()" placeholder="Show Cost">
+  <option value="0">No</option>
+  <option value="1">Yes</option>
+</select>
+
+--
+
+<label for="">Show Completation</label>
+<select [(ngModel)]="vShowComp" (change)="ngOnInit()" placeholder="Show Completation">
+  <option value="0">No</option>
+  <option value="1">Yes</option>
+</select>
+
+--
+
+<label for="">Show Duration</label>
+<select [(ngModel)]="vShowDur" (change)="ngOnInit()" placeholder="Show Duration">
+  <option value="0">No</option>
+  <option value="1">Yes</option>
+</select>
+
+--
+
+<label for="">Show StartDate</label>
+<select [(ngModel)]="vShowStartDate" (change)="ngOnInit()" placeholder="Show StartDate">
+  <option value="0">No</option>
+  <option value="1">Yes</option>
+</select>
+
+--
+
+<label for="">Show ShowEndDate</label>
+<select [(ngModel)]="vShowEndDate" (change)="ngOnInit()" placeholder="Show ShowEndDate">
+  <option value="0">No</option>
+  <option value="1">Yes</option>
+</select>
+
+--
+
+<label for="">Show PlanStartDate</label>
+<select [(ngModel)]="vShowPlanStartDate" (change)="ngOnInit()" placeholder="Show PlanStartDate">
+  <option value="0">No</option>
+  <option value="1">Yes</option>
+</select>
+
+--
+
+<label for="">Show PlanEndDate</label>
+<select [(ngModel)]="vShoPlanEndDate" (change)="ngOnInit()" placeholder="Show PlanEndDate">
+  <option value="0">No</option>
+  <option value="1">Yes</option>
+</select>
+
+--
+
+<label for="">Show ShowEndWeekDate</label>
+<select [(ngModel)]="vShowEndWeekDate" (change)="ngOnInit()" placeholder="Show ShowEndWeekDate">
+  <option value="0">No</option>
+  <option value="1">Yes</option>
+</select>
+
+--
+
+<label for="">Show TaskInfoLink</label>
+<select [(ngModel)]="vShowTaskInfoLink" (change)="ngOnInit()" placeholder="Show TaskInfoLink">
+  <option value="0">No</option>
+  <option value="1">Yes</option>
+</select>
+
+--
+
+<h4>Dev Options</h4>
+
+<label for="">Debug</label>
+<select [(ngModel)]="vDebug" (change)="ngOnInit()" placeholder="Debug">
+  <option value="false">No</option>
+  <option value="true">Yes</option>
+</select>
+
+<label for="">Use Sort</label>
+<select [(ngModel)]="vUseSort" (change)="ngOnInit()" placeholder="UseSort">
+  <option value="false">No</option>
+  <option value="true">Yes</option>
+</select>
+
+
+
+<hr/>
+
 <h3>Live Reload</h3>
 <button (click)="changeData()">New Data</button>
 
