@@ -6,11 +6,13 @@ import { NgGanttEditorModule } from 'ng-gantt';
 import { AppComponent } from './app.component';
 import { routes } from './app.module';
 import { DemoComponent } from './demo/demo.component';
+import { FormsModule } from '@angular/forms';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
+        FormsModule,
         NgGanttEditorModule.forRoot(),
         RouterTestingModule.withRoutes(routes)
       ],
