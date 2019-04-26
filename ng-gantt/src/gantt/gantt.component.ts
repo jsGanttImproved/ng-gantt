@@ -13,12 +13,14 @@ export class GanttEditorComponent implements OnInit {
   private editor: any;
   public id = 'anggantteditor' + Math.floor(Math.random() * 1000000);
   public optionsChanged = false;
+  public formats = ['Hour', 'Day', 'Week', 'Month', 'Quarter'];
 
   @ViewChild('ganttEditorContainer') ganttEditorContainer: ElementRef;
 
   private _data;
 
   @Input() options: GanttEditorOptions = new GanttEditorOptions();
+  @Input() format = 'week';
   @Input('data')
   set data(value: Object) {
     this._data = value;
@@ -37,8 +39,9 @@ export class GanttEditorComponent implements OnInit {
     if (!this.optionsChanged && this.editor) {
       optionsBefore = this.editor.options;
     }
+
     // document.getElementById('embedded-Gantt')
-    const g = this.editor = new (<any>JSGantt).GanttChart(this.ganttEditorContainer.nativeElement, 'week');
+    const g = this.editor = new (<any>JSGantt).GanttChart(this.ganttEditorContainer.nativeElement, this.format);
 
     if (g.getDivId() != null) {
 
@@ -54,7 +57,7 @@ export class GanttEditorComponent implements OnInit {
         vShowEndWeekDate: 0,  // Show/Hide the date for the last day of the week in header for
         vUseSingleCell: 10000,
         // Even with setUseSingleCell using Hour format on such a large chart can cause issues in some browsers
-        vFormatArr: ['Day', 'Week', 'Month', 'Quarter'],
+        vFormatArr: this.formats.slice(1),
         ...optionsBefore
       });
       if (this._data && this._data.forEach) {
@@ -83,6 +86,7 @@ export class GanttEditorComponent implements OnInit {
   public destroy() {
     // this.editor.destroy();
   }
+
 }
 
 export class GanttEditorOptions {
