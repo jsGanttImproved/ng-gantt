@@ -18,7 +18,7 @@
   "peerDependencies": {
     "@angular/core": ">=6.0.0-rc.5",
     "@angular/common": ">=6.0.0-rc.5",
-    "jsgantt-improved": "^2.1.10"
+    "jsgantt-improved": "^2.2.6"
   },
   "ngPackage": {
     "$schema": "./node_modules/ng-packagr/ng-package.schema.json",
