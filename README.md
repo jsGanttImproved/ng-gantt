@@ -56,7 +56,7 @@ export class AppComponent {
 
   constructor() { 
     this.editorOptions = new GanttEditorOptions()
-     this.data2 = [{
+     this.data = [{
       'pID': 1,
       'pName': 'Define Chart API',
       'pStart': '',
