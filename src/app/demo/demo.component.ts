@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { GanttEditorComponent } from 'ng-gantt'; // GanttEditorOptions
+import { GanttEditorComponent } from 'ng-gantt';
 
 @Component({
   selector: 'app-demo',
