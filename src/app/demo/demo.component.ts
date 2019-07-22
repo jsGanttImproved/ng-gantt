@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { GanttEditorComponent, GanttEditorOptions } from 'ng-gantt';
+import { GanttEditorComponent } from 'ng-gantt'; // GanttEditorOptions
 
 @Component({
   selector: 'app-demo',
@@ -122,6 +122,7 @@ export class DemoComponent implements OnInit {
       vEditable: this.vEditable === 'true',
       vUseSort: this.vUseSort === 'true',
       vFormatArr: ['Day', 'Week', 'Month', 'Quarter'],
+      vFormat: 'day'
     };
     this.editor.setOptions(this.editorOptions);
     // this.editorOptions.onChange = this.change.bind(this);
