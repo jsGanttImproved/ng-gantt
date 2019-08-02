@@ -48,6 +48,7 @@ export class GanttEditorComponent implements OnInit {
       // JSGantt.parseJSON('./fixes/data.json', g);
 
       g.setOptions({
+        ...optionsBefore,
         vCaptionType: 'Complete',  // Set to Show Caption : None,Caption,Resource,Duration,Complete,
         vQuarterColWidth: 36,
         vDateTaskDisplayFormat: 'day dd month yyyy', // Shown in tool tip box
@@ -58,7 +59,9 @@ export class GanttEditorComponent implements OnInit {
         vUseSingleCell: 10000,
         // Even with setUseSingleCell using Hour format on such a large chart can cause issues in some browsers
         vFormatArr: this.formats.slice(1),
-        ...optionsBefore
+        vEvents: {
+          afterDraw: () => console.log('angular: before after listener')
+        }
       });
       if (this._data && this._data.forEach) {
         this._data.forEach(row => {
