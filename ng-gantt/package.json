@@ -16,8 +16,8 @@
     "gantt"
   ],
   "peerDependencies": {
-    "@angular/core": ">=6.0.0-rc.5",
-    "@angular/common": ">=6.0.0-rc.5",
+    "@angular/core": ">=8.0.0",
+    "@angular/common": ">=8.0.0",
     "jsgantt-improved": "^2.4.1"
   },
   "ngPackage": {
