@@ -52,7 +52,7 @@ import { GanttEditorComponent, GanttEditorOptions } from 'ng-gantt';
 export class AppComponent {
   public editorOptions: GanttEditorOptions;
   public data: any;
-  @ViewChild(GanttEditorComponent) editor: GanttEditorComponent;
+  @ViewChild(GanttEditorComponent, { static: true }) editor: GanttEditorComponent;
 
   constructor() { 
     this.editorOptions = new GanttEditorOptions()
