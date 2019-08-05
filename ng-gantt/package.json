@@ -1,6 +1,6 @@
 {
   "name": "ng-gantt",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "license": "MIT",
   "homepage": "https://github.com/jsGanttImproved/ng-gantt",
   "repository": {
@@ -22,7 +22,7 @@
   },
   "ngPackage": {
     "$schema": "./node_modules/ng-packagr/ng-package.schema.json",
-    "workingDirectory": "../.ng_build",
+    
     "lib": {
       "entryFile": "src/public_api.ts"
     },
