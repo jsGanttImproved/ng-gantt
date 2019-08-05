@@ -15,7 +15,7 @@ export class GanttEditorComponent implements OnInit {
   public optionsChanged = false;
   public formats = ['Hour', 'Day', 'Week', 'Month', 'Quarter'];
 
-  @ViewChild('ganttEditorContainer') ganttEditorContainer: ElementRef;
+  @ViewChild('ganttEditorContainer', { static: true }) ganttEditorContainer: ElementRef;
 
   private _data;
 

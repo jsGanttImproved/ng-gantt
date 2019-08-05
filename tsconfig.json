@@ -1,5 +1,6 @@
 {
   "compileOnSave": false,
+  "annotateForClosureCompiler": false,
   "compilerOptions": {
     "outDir": "./dist",
     "baseUrl": "src",
@@ -18,7 +19,9 @@
       "dom"
     ],
     "paths": {
-      "ng-gantt": [ "dist/ng-gantt" ]
+      "ng-gantt": [
+        "dist/ng-gantt"
+      ]
     }
   },
   "exclude": [

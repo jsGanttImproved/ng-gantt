@@ -29,8 +29,8 @@ export class DemoComponent implements OnInit {
   vLang = 'en';
   delay = 150;
 
-  @ViewChild('editor') editor: GanttEditorComponent;
-  @ViewChild('editorTwo') editorTwo: GanttEditorComponent;
+  @ViewChild('editor', { static: true }) editor: GanttEditorComponent;
+  @ViewChild('editorTwo', { static: true }) editorTwo: GanttEditorComponent;
 
   constructor() {
 
