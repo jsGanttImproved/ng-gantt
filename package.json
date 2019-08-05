@@ -33,7 +33,7 @@
     "rxjs": "^6.4.0",
     "webpack": "^4.16.1",
     "zone.js": "^0.9.0",
-    "jsgantt-improved": "^2.4.1"
+    "jsgantt-improved": "^2.4.4"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.802.0",
