@@ -3,6 +3,7 @@ import {
 } from '@angular/core';
 // import { JSGantt } from 'jsgantt-improved';
 import * as JSGantt from 'jsgantt-improved';
+import { GanttEditorOptions } from './gantt.editoroptions';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -89,17 +90,3 @@ export class GanttEditorComponent implements OnInit {
 
 }
 
-export class GanttEditorOptions {
-
-  // public onEditable: (node: GanttEditorTreeNode | {}) => boolean | { field: boolean, value: boolean };
-  // public theme: Number;
-  // public language: String;
-  // public languages: Object;
-
-  constructor() {
-    // this.escapeUnicode = false;
-    // this.sortObjectKeys = false;
-    // this.history = true;
-  }
-
-}
