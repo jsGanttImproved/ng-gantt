@@ -88,5 +88,9 @@ export class GanttEditorComponent implements OnInit {
     // this.editor.destroy();
   }
 
+  public getEditor(){
+    return this.editor;
+  }
+
 }
 
