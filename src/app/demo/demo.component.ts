@@ -178,6 +178,12 @@ export class DemoComponent implements OnInit {
     // console.log(changedGantt);
   }
 
+  clear(){
+    const g = this.editor.getEditor();
+    g.ClearTasks();
+    g.Draw()
+  }
+
   initialData() {
     return [{
       'pID': 1,
