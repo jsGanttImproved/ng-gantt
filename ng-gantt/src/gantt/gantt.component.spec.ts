@@ -148,6 +148,108 @@ describe('GanttEditorComponent', () => {
   });
 
   // ---------------------------------------------------------------------------
+  // redrawOnResize input & onWindowResize()
+  // ---------------------------------------------------------------------------
+
+  describe('redrawOnResize input', () => {
+    it('should default to true', () => {
+      expect(component.redrawOnResize).toBeTrue();
+    });
+  });
+
+  describe('onWindowResize()', () => {
+    beforeEach(() => jasmine.clock().install());
+    afterEach(() => jasmine.clock().uninstall());
+
+    it('should redraw the chart after 200 ms when redrawOnResize is true', () => {
+      const destroySpy = spyOn(component, 'destroy').and.callThrough();
+      const initSpy    = spyOn(component, 'ngOnInit').and.callThrough();
+
+      component.onWindowResize();
+      jasmine.clock().tick(200);
+
+      expect(destroySpy).toHaveBeenCalledTimes(1);
+      expect(initSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('should not redraw when redrawOnResize is false', () => {
+      component.redrawOnResize = false;
+      const destroySpy = spyOn(component, 'destroy').and.callThrough();
+      const initSpy    = spyOn(component, 'ngOnInit').and.callThrough();
+
+      component.onWindowResize();
+      jasmine.clock().tick(200);
+
+      expect(destroySpy).not.toHaveBeenCalled();
+      expect(initSpy).not.toHaveBeenCalled();
+    });
+
+    it('should debounce: only one redraw when called multiple times within 200 ms', () => {
+      const destroySpy = spyOn(component, 'destroy').and.callThrough();
+
+      component.onWindowResize();
+      jasmine.clock().tick(50);
+      component.onWindowResize();
+      jasmine.clock().tick(50);
+      component.onWindowResize();
+      jasmine.clock().tick(200);
+
+      expect(destroySpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('should not redraw when the editor is null', () => {
+      component.destroy(); // null out the editor
+      const initSpy = spyOn(component, 'ngOnInit').and.callThrough();
+
+      component.onWindowResize();
+      jasmine.clock().tick(200);
+
+      expect(initSpy).not.toHaveBeenCalled();
+    });
+
+    it('should fire on a native window resize event when redrawOnResize is true', () => {
+      const destroySpy = spyOn(component, 'destroy').and.callThrough();
+
+      window.dispatchEvent(new Event('resize'));
+      jasmine.clock().tick(200);
+
+      expect(destroySpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('should not fire on a native window resize event when redrawOnResize is false', () => {
+      component.redrawOnResize = false;
+      const destroySpy = spyOn(component, 'destroy').and.callThrough();
+
+      window.dispatchEvent(new Event('resize'));
+      jasmine.clock().tick(200);
+
+      expect(destroySpy).not.toHaveBeenCalled();
+    });
+  });
+
+  // ---------------------------------------------------------------------------
+  // ngOnDestroy()
+  // ---------------------------------------------------------------------------
+
+  describe('ngOnDestroy()', () => {
+    beforeEach(() => jasmine.clock().install());
+    afterEach(() => jasmine.clock().uninstall());
+
+    it('should cancel a pending resize redraw on destroy', () => {
+      const destroySpy = spyOn(component, 'destroy').and.callThrough();
+      const initSpy    = spyOn(component, 'ngOnInit').and.callThrough();
+
+      component.onWindowResize();    // starts the 200 ms timer
+      component.ngOnDestroy();       // should cancel it
+      jasmine.clock().tick(200);
+
+      // destroy() is called only once — by ngOnDestroy itself? No — ngOnDestroy
+      // only clears the timer; it does not call destroy(). So neither spy fires.
+      expect(initSpy).not.toHaveBeenCalled();
+    });
+  });
+
+  // ---------------------------------------------------------------------------
   // destroy() + data setter interaction
   // ---------------------------------------------------------------------------
 

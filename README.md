@@ -73,6 +73,15 @@ export class AppComponent {
 }
 ```
 
+## Inputs
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
+| `options` | `GanttEditorOptions` | `new GanttEditorOptions()` | jsgantt-improved configuration options passed directly to `setOptions()`. |
+| `format` | `string` | `'week'` | Initial time-scale format. One of `'hour'`, `'day'`, `'week'`, `'month'`, `'quarter'`. |
+| `data` | `Object[]` | — | Task rows. Each object is passed to `AddTaskItemObject()`. Setting this input after init destroys and redraws the chart. |
+| `redrawOnResize` | `boolean` | `true` | When `true`, the chart is redrawn whenever the window is resized (including browser zoom changes). Set to `false` to manage redraws yourself. |
+
 ### 3. Add styles
 
 In your `src/styles.css`:
