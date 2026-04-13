@@ -1,5 +1,5 @@
 import {
-  Component, ElementRef, Input, OnInit, ViewChild
+  Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild
 } from '@angular/core';
 // import { JSGantt } from 'jsgantt-improved';
 import * as JSGantt from 'jsgantt-improved';
@@ -11,11 +11,12 @@ import { GanttEditorOptions } from './gantt.editoroptions';
   standalone: false,
   template: '<div [id]="id" #ganttEditorContainer></div>'
 })
-export class GanttEditorComponent implements OnInit {
+export class GanttEditorComponent implements OnInit, OnDestroy {
   private editor: any;
   public id = 'anggantteditor' + Math.floor(Math.random() * 1000000);
   public optionsChanged = false;
   public formats = ['Hour', 'Day', 'Week', 'Month', 'Quarter'];
+  private _resizeTimer: any;
 
   @ViewChild('ganttEditorContainer', { static: true }) ganttEditorContainer: ElementRef;
 
@@ -87,6 +88,21 @@ export class GanttEditorComponent implements OnInit {
 
   public destroy() {
     // this.editor.destroy();
+  }
+
+  ngOnDestroy() {
+    clearTimeout(this._resizeTimer);
+  }
+
+  @HostListener('window:resize')
+  onWindowResize() {
+    clearTimeout(this._resizeTimer);
+    this._resizeTimer = setTimeout(() => {
+      if (this.editor) {
+        this.destroy();
+        this.ngOnInit();
+      }
+    }, 200);
   }
 
   public getEditor(){
