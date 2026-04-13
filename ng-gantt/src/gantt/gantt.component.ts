@@ -24,6 +24,7 @@ export class GanttEditorComponent implements OnInit, OnDestroy {
 
   @Input() options: GanttEditorOptions = new GanttEditorOptions();
   @Input() format = 'week';
+  @Input() redrawOnResize = true;
   @Input('data')
   set data(value: Object) {
     this._data = value;
@@ -97,6 +98,7 @@ export class GanttEditorComponent implements OnInit, OnDestroy {
 
   @HostListener('window:resize')
   onWindowResize() {
+    if (!this.redrawOnResize) return;
     clearTimeout(this._resizeTimer);
     this._resizeTimer = setTimeout(() => {
       if (this.editor) {
