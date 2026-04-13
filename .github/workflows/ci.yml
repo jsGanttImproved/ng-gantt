@@ -19,27 +19,26 @@ jobs:
         with:
           node-version: '18'
 
-      # npm (without a lockfile) resolves wildcard/loose ranges to Angular 14+,
-      # whose fesm2022 ESM modules cannot be require()'d by ng-packagr@9.
-      # npm 8 overrides force every node in the dependency tree to Angular 11
-      # before resolution runs, and swap ng-packagr for the Angular-11 release.
-      - name: Pin Angular 11 via npm overrides
+      # package.json has inconsistent Angular versions (10.0.8, 19.x, ^9 ng-packagr).
+      # Without a lockfile npm resolves wildcards to newest, pulling fesm2022 ESM
+      # modules that ng-packagr@9 (CJS require()) cannot load.
+      # Patch direct deps AND devDeps to a consistent Angular 11 set before install.
+      - name: Pin Angular 11 in package.json
         run: |
           node -e "
             const fs = require('fs');
             const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
-            pkg.overrides = {
-              '@angular/animations':              '11.2.14',
-              '@angular/common':                  '11.2.14',
-              '@angular/compiler':                '11.2.14',
-              '@angular/compiler-cli':            '11.2.14',
-              '@angular/core':                    '11.2.14',
-              '@angular/forms':                   '11.2.14',
-              '@angular/platform-browser':        '11.2.14',
-              '@angular/platform-browser-dynamic':'11.2.14',
-              '@angular/router':                  '11.2.14',
-              'ng-packagr':                       '11.2.0'
-            };
+            const v = '11.2.14';
+            const ng = ['@angular/animations','@angular/common','@angular/compiler',
+                        '@angular/compiler-cli','@angular/core','@angular/forms',
+                        '@angular/platform-browser','@angular/platform-browser-dynamic',
+                        '@angular/router'];
+            ng.forEach(p => {
+              if (pkg.dependencies && pkg.dependencies[p])    pkg.dependencies[p] = v;
+              if (pkg.devDependencies && pkg.devDependencies[p]) pkg.devDependencies[p] = v;
+            });
+            if (pkg.devDependencies) pkg.devDependencies['ng-packagr'] = '11.2.0';
+            delete pkg.overrides;
             fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));
           "
 
@@ -69,23 +68,22 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Pin Angular 11 via npm overrides
+      - name: Pin Angular 11 in package.json
         run: |
           node -e "
             const fs = require('fs');
             const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
-            pkg.overrides = {
-              '@angular/animations':              '11.2.14',
-              '@angular/common':                  '11.2.14',
-              '@angular/compiler':                '11.2.14',
-              '@angular/compiler-cli':            '11.2.14',
-              '@angular/core':                    '11.2.14',
-              '@angular/forms':                   '11.2.14',
-              '@angular/platform-browser':        '11.2.14',
-              '@angular/platform-browser-dynamic':'11.2.14',
-              '@angular/router':                  '11.2.14',
-              'ng-packagr':                       '11.2.0'
-            };
+            const v = '11.2.14';
+            const ng = ['@angular/animations','@angular/common','@angular/compiler',
+                        '@angular/compiler-cli','@angular/core','@angular/forms',
+                        '@angular/platform-browser','@angular/platform-browser-dynamic',
+                        '@angular/router'];
+            ng.forEach(p => {
+              if (pkg.dependencies && pkg.dependencies[p])    pkg.dependencies[p] = v;
+              if (pkg.devDependencies && pkg.devDependencies[p]) pkg.devDependencies[p] = v;
+            });
+            if (pkg.devDependencies) pkg.devDependencies['ng-packagr'] = '11.2.0';
+            delete pkg.overrides;
             fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));
           "
 
