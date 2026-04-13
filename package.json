@@ -8,7 +8,7 @@
     "build": "npm run copy && ng build",
     "copy": "cp -R dist/ng-gantt src/ng-gantt",
     "build:app": "npm run copy && ng build --project packages && rimraf src/ng-gantt",
-    "build:lib": "rimraf dist && ng-packagr -p ng-gantt/package.json",
+    "build:lib": "rimraf dist && ng-packagr -p ng-gantt/ng-package.json",
     "publish-npm": "npm run build:lib && cd dist/ng-gantt && npm publish",
     "reload": "npm run build:lib && npm run build && npm run start",
     "dev": "cd dist/app && http-server",
