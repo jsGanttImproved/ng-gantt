@@ -37,10 +37,13 @@ jobs:
               if (pkg.dependencies && pkg.dependencies[p])    pkg.dependencies[p] = v;
               if (pkg.devDependencies && pkg.devDependencies[p]) pkg.devDependencies[p] = v;
             });
-            if (pkg.dependencies)    pkg.dependencies['webpack']         = '4.46.0';
+            if (pkg.dependencies)    pkg.dependencies['webpack']                       = '4.46.0';
             if (pkg.devDependencies) {
-              pkg.devDependencies['ng-packagr']  = '11.2.0';
-              pkg.devDependencies['typescript']  = '4.1.6';
+              pkg.devDependencies['ng-packagr']                    = '11.2.0';
+              pkg.devDependencies['typescript']                    = '4.1.6';
+              pkg.devDependencies['@angular/cli']                  = '11.2.19';
+              pkg.devDependencies['@angular-devkit/build-angular'] = '0.1102.19';
+              pkg.devDependencies['@angular-devkit/schematics']    = '11.2.19';
             }
             delete pkg.overrides;
             fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));
