@@ -48,7 +48,6 @@ jobs:
             // source-map 0.8+ requires WASM init; pin transitive dep to last 0.7.x.
             // Only safe as an override (not direct dep) to avoid EOVERRIDE conflict.
             pkg.overrides = { 'source-map': '0.7.4' };
-            delete pkg.overrides;
             fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));
           "
 
@@ -78,7 +77,7 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Pin Angular 11 + TypeScript 4.1 in package.json
+      - name: Pin Angular 11 + TypeScript 4.1 + webpack 4 in package.json
         run: |
           node -e "
             const fs = require('fs');
@@ -92,11 +91,15 @@ jobs:
               if (pkg.dependencies && pkg.dependencies[p])    pkg.dependencies[p] = v;
               if (pkg.devDependencies && pkg.devDependencies[p]) pkg.devDependencies[p] = v;
             });
+            if (pkg.dependencies)    pkg.dependencies['webpack']                       = '4.46.0';
             if (pkg.devDependencies) {
-              pkg.devDependencies['ng-packagr']  = '11.2.0';
-              pkg.devDependencies['typescript']  = '4.1.6';
+              pkg.devDependencies['ng-packagr']                    = '11.2.0';
+              pkg.devDependencies['typescript']                    = '4.1.6';
+              pkg.devDependencies['@angular/cli']                  = '11.2.19';
+              pkg.devDependencies['@angular-devkit/build-angular'] = '0.1102.19';
+              pkg.devDependencies['@angular-devkit/schematics']    = '11.2.19';
             }
-            delete pkg.overrides;
+            pkg.overrides = { 'source-map': '0.7.4' };
             fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));
           "
 
