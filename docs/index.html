@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ng-gantt — Live Demo</title>
+
+  <!-- jsgantt-improved styles -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsgantt-improved@2.8.10/dist/jsgantt.css" />
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f4f6f9;
+      color: #333;
+    }
+
+    header {
+      background: #1a1a2e;
+      color: #fff;
+      padding: 20px 32px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    header h1 { font-size: 1.6rem; font-weight: 700; }
+    header p  { font-size: 0.9rem; opacity: 0.75; margin-top: 2px; }
+
+    .badge-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .badge-row a img { height: 20px; }
+
+    .container {
+      max-width: 1200px;
+      margin: 32px auto;
+      padding: 0 24px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .card h2 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: #1a1a2e;
+      border-bottom: 2px solid #e8eaf0;
+      padding-bottom: 8px;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .controls label {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #555;
+    }
+
+    .controls select,
+    .controls input[type="number"] {
+      border: 1px solid #d0d4dc;
+      border-radius: 4px;
+      padding: 5px 10px;
+      font-size: 0.85rem;
+      color: #333;
+      background: #fff;
+    }
+
+    .controls .group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    button {
+      border: none;
+      border-radius: 4px;
+      padding: 7px 16px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      font-weight: 500;
+      transition: opacity 0.15s;
+    }
+
+    button:hover { opacity: 0.85; }
+
+    .btn-primary { background: #4361ee; color: #fff; }
+    .btn-secondary { background: #e8eaf0; color: #333; }
+    .btn-danger { background: #ef233c; color: #fff; }
+
+    #gantt-wrapper {
+      width: 100%;
+      height: 480px;
+      overflow: hidden;
+      border: 1px solid #e0e4ed;
+      border-radius: 6px;
+    }
+
+    .install-block {
+      background: #1a1a2e;
+      color: #c9d1d9;
+      border-radius: 6px;
+      padding: 16px 20px;
+      font-family: 'SFMono-Regular', Consolas, monospace;
+      font-size: 0.88rem;
+      line-height: 1.7;
+    }
+
+    .install-block .comment { color: #6e7681; }
+    .install-block .cmd { color: #58a6ff; }
+
+    footer {
+      text-align: center;
+      padding: 24px;
+      font-size: 0.8rem;
+      color: #888;
+    }
+
+    footer a { color: #4361ee; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>ng-gantt</h1>
+    <p>Angular wrapper for <a href="https://github.com/jsGanttImproved/jsgantt-improved" style="color:#a5b4fc">jsgantt-improved</a></p>
+    <div class="badge-row">
+      <a href="https://github.com/jsGanttImproved/ng-gantt/actions/workflows/ci.yml">
+        <img src="https://github.com/jsGanttImproved/ng-gantt/actions/workflows/ci.yml/badge.svg" alt="CI" />
+      </a>
+      <a href="https://www.npmjs.com/package/ng-gantt">
+        <img src="https://img.shields.io/npm/v/ng-gantt.svg" alt="npm" />
+      </a>
+      <a href="https://github.com/jsGanttImproved/ng-gantt/blob/master/LICENSE">
+        <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License" />
+      </a>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- Controls -->
+  <div class="card">
+    <h2>Options</h2>
+    <div class="controls">
+      <div class="group">
+        <label for="sel-format">Format</label>
+        <select id="sel-format" onchange="reloadChart()">
+          <option value="day">Day</option>
+          <option value="week">Week</option>
+          <option value="month" selected>Month</option>
+          <option value="quarter">Quarter</option>
+        </select>
+      </div>
+      <div class="group">
+        <label for="sel-res">Resources</label>
+        <select id="sel-res" onchange="reloadChart()">
+          <option value="1" selected>Show</option>
+          <option value="0">Hide</option>
+        </select>
+      </div>
+      <div class="group">
+        <label for="sel-comp">Completion</label>
+        <select id="sel-comp" onchange="reloadChart()">
+          <option value="1" selected>Show</option>
+          <option value="0">Hide</option>
+        </select>
+      </div>
+      <div class="group">
+        <label for="sel-edit">Editable</label>
+        <select id="sel-edit" onchange="reloadChart()">
+          <option value="false" selected>No</option>
+          <option value="true">Yes</option>
+        </select>
+      </div>
+      <div class="group">
+        <label for="sel-lang">Language</label>
+        <select id="sel-lang" onchange="reloadChart()">
+          <option value="en" selected>EN</option>
+          <option value="pt-BR">PT-BR</option>
+          <option value="de">DE</option>
+          <option value="fr">FR</option>
+          <option value="ja">JA</option>
+        </select>
+      </div>
+      <button class="btn-primary" onclick="reloadChart()">Reload</button>
+      <button class="btn-danger" onclick="clearChart()">Clear</button>
+    </div>
+  </div>
+
+  <!-- Gantt chart -->
+  <div class="card">
+    <h2>Live Gantt Chart</h2>
+    <div id="gantt-wrapper">
+      <div id="GanttChartDIV"></div>
+    </div>
+  </div>
+
+  <!-- Installation -->
+  <div class="card">
+    <h2>Installation</h2>
+    <div class="install-block">
+      <span class="comment"># Install via npm</span><br/>
+      <span class="cmd">npm install --save jsgantt-improved ng-gantt</span><br/><br/>
+      <span class="comment"># Import in your Angular module</span><br/>
+      <span>import { NgGanttEditorModule } from 'ng-gantt';</span><br/><br/>
+      <span class="comment"># Add to your template</span><br/>
+      <span>&lt;ng-gantt [options]="editorOptions" [data]="data"&gt;&lt;/ng-gantt&gt;</span>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>
+    <a href="https://github.com/jsGanttImproved/ng-gantt">GitHub</a> &middot;
+    <a href="https://www.npmjs.com/package/ng-gantt">npm</a> &middot;
+    <a href="https://stackblitz.com/edit/angular-ng-gantt">StackBlitz</a> &middot;
+    MIT License
+  </p>
+</footer>
+
+<!-- jsgantt-improved script -->
+<script src="https://cdn.jsdelivr.net/npm/jsgantt-improved@2.8.10/dist/jsgantt.js"></script>
+
+<script>
+  var g;
+
+  var tasks = [
+    { pID: 1,   pName: 'Project Kickoff',      pStart: '2024-01-01', pEnd: '2024-01-15', pClass: 'ggroupblack', pRes: '',        pComp: 100, pGroup: 1, pParent: 0,  pOpen: 1, pDepend: '', pCaption: '', pNotes: 'Initial planning phase' },
+    { pID: 11,  pName: 'Requirements',          pStart: '2024-01-01', pEnd: '2024-01-07', pClass: 'gtaskblue',   pRes: 'Alice',   pComp: 100, pGroup: 0, pParent: 1,  pOpen: 1, pDepend: '', pCaption: '', pNotes: '' },
+    { pID: 12,  pName: 'Architecture Design',   pStart: '2024-01-05', pEnd: '2024-01-15', pClass: 'gtaskblue',   pRes: 'Bob',     pComp: 100, pGroup: 0, pParent: 1,  pOpen: 1, pDepend: '11', pCaption: '', pNotes: '' },
+    { pID: 2,   pName: 'Development Sprint 1',  pStart: '2024-01-16', pEnd: '2024-02-15', pClass: 'ggroupblack', pRes: '',        pComp: 80,  pGroup: 1, pParent: 0,  pOpen: 1, pDepend: '1', pCaption: '', pNotes: '' },
+    { pID: 21,  pName: 'UI Components',         pStart: '2024-01-16', pEnd: '2024-02-01', pClass: 'gtaskgreen',  pRes: 'Alice',   pComp: 90,  pGroup: 0, pParent: 2,  pOpen: 1, pDepend: '12', pCaption: '', pNotes: '' },
+    { pID: 22,  pName: 'API Integration',       pStart: '2024-01-22', pEnd: '2024-02-10', pClass: 'gtaskgreen',  pRes: 'Bob',     pComp: 75,  pGroup: 0, pParent: 2,  pOpen: 1, pDepend: '12', pCaption: '', pNotes: '' },
+    { pID: 23,  pName: 'Unit Tests',            pStart: '2024-02-05', pEnd: '2024-02-15', pClass: 'gtaskgreen',  pRes: 'Carol',   pComp: 60,  pGroup: 0, pParent: 2,  pOpen: 1, pDepend: '21,22', pCaption: '', pNotes: '' },
+    { pID: 3,   pName: 'Development Sprint 2',  pStart: '2024-02-16', pEnd: '2024-03-15', pClass: 'ggroupblack', pRes: '',        pComp: 40,  pGroup: 1, pParent: 0,  pOpen: 1, pDepend: '2', pCaption: '', pNotes: '' },
+    { pID: 31,  pName: 'Feature: Auth',         pStart: '2024-02-16', pEnd: '2024-02-28', pClass: 'gtaskpurple', pRes: 'Bob',     pComp: 50,  pGroup: 0, pParent: 3,  pOpen: 1, pDepend: '23', pCaption: '', pNotes: '' },
+    { pID: 32,  pName: 'Feature: Dashboard',    pStart: '2024-02-20', pEnd: '2024-03-10', pClass: 'gtaskpurple', pRes: 'Alice',   pComp: 30,  pGroup: 0, pParent: 3,  pOpen: 1, pDepend: '23', pCaption: '', pNotes: '' },
+    { pID: 33,  pName: 'E2E Testing',           pStart: '2024-03-05', pEnd: '2024-03-15', pClass: 'gtaskpurple', pRes: 'Carol',   pComp: 20,  pGroup: 0, pParent: 3,  pOpen: 1, pDepend: '31,32', pCaption: '', pNotes: '' },
+    { pID: 4,   pName: 'Release',               pStart: '2024-03-16', pEnd: '2024-03-31', pClass: 'ggroupblack', pRes: '',        pComp: 0,   pGroup: 1, pParent: 0,  pOpen: 1, pDepend: '3', pCaption: '', pNotes: '' },
+    { pID: 41,  pName: 'Staging Deploy',        pStart: '2024-03-16', pEnd: '2024-03-22', pClass: 'gtaskred',    pRes: 'DevOps',  pComp: 0,   pGroup: 0, pParent: 4,  pOpen: 1, pDepend: '33', pCaption: '', pNotes: '' },
+    { pID: 42,  pName: 'UAT',                   pStart: '2024-03-20', pEnd: '2024-03-28', pClass: 'gtaskred',    pRes: 'QA Team', pComp: 0,   pGroup: 0, pParent: 4,  pOpen: 1, pDepend: '41', pCaption: '', pNotes: '' },
+    { pID: 43,  pName: 'Production Release',    pStart: '2024-03-29', pEnd: '2024-03-31', pClass: 'gtaskyellow', pRes: 'DevOps',  pComp: 0,   pGroup: 0, pParent: 4,  pOpen: 1, pDepend: '42', pCaption: 'v1.0', pNotes: 'Public launch', pMile: 1 }
+  ];
+
+  function buildChart() {
+    var format   = document.getElementById('sel-format').value;
+    var showRes  = document.getElementById('sel-res').value;
+    var showComp = document.getElementById('sel-comp').value;
+    var editable = document.getElementById('sel-edit').value;
+    var lang     = document.getElementById('sel-lang').value;
+
+    var container = document.getElementById('GanttChartDIV');
+    container.innerHTML = '';
+
+    g = new JSGantt.GanttChart(container, format);
+
+    g.setOptions({
+      vFormat:           format,
+      vShowRes:          parseInt(showRes),
+      vShowComp:         parseInt(showComp),
+      vEditable:         editable === 'true',
+      vLang:             lang,
+      vShowDur:          0,
+      vShowStartDate:    1,
+      vShowEndDate:      1,
+      vShowTaskInfoRes:  1,
+      vShowTaskInfoDur:  1,
+      vShowTaskInfoComp: 1,
+      vShowTaskInfoLink: 1,
+      vShowTaskInfoNotes:1,
+      vDebug:            false,
+      vUseSingleCell:    0,
+      vCaptionType:      'Caption',
+      vQuarterColWidth:  36,
+      vDayColWidth:      18,
+      vWeekColWidth:     36,
+      vMonthColWidth:    36
+    });
+
+    tasks.forEach(function(t) {
+      g.addTaskItemObject(t);
+    });
+
+    g.draw();
+  }
+
+  function reloadChart() {
+    buildChart();
+  }
+
+  function clearChart() {
+    var container = document.getElementById('GanttChartDIV');
+    container.innerHTML = '<p style="padding:24px;color:#888;text-align:center;">Chart cleared. Click <strong>Reload</strong> to restore.</p>';
+  }
+
+  // Initial render
+  buildChart();
+</script>
+</body>
+</html>

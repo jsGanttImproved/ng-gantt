@@ -1,44 +1,37 @@
-# Angular Gantt Editor
+# ng-gantt — Angular Gantt Editor
 
-[![Build Status](https://travis-ci.com/jsGanttImproved/ng-gantt.svg?branch=master)](https://travis-ci.com/jsGanttImproved/ng-gantt)
+[![CI](https://github.com/jsGanttImproved/ng-gantt/actions/workflows/ci.yml/badge.svg)](https://github.com/jsGanttImproved/ng-gantt/actions/workflows/ci.yml)
+[![npm](https://img.shields.io/npm/v/ng-gantt.svg)](https://www.npmjs.com/package/ng-gantt)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 
-Angular Gantt Editor (wrapper for [jsgantt-improved](https://github.com/jsGanttImproved/jsgantt-improved)). View/Edit Gantt file with formatting.
+Angular wrapper for [jsgantt-improved](https://github.com/jsGanttImproved/jsgantt-improved). View and edit Gantt charts in your Angular application.
 
-[StackBlitz template](https://stackblitz.com/edit/angular-ng-gantt)
+**[Live Demo (GitHub Pages)](https://jsganttimproved.github.io/ng-gantt/)** &nbsp;|&nbsp; **[StackBlitz](https://stackblitz.com/edit/angular-ng-gantt)**
 
-Working with latest Angular 10. 
-
-![Demo Image](/src/demo.gif)
+![Demo Image](src/demo.gif)
 
 ## Installation
 
-To install this library with npm, run below command:
-
-$ npm install --save jsgantt-improved ng-gantt
+```bash
+npm install --save jsgantt-improved ng-gantt
+```
 
 ## Usage
 
-### Configuration
-
-First, Import Angular  GanttEditor module in root
+### 1. Import the module
 
 ```ts
-import { NgGanttEditorModule } from 'ng-gantt' 
+import { NgGanttEditorModule } from 'ng-gantt';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
   imports: [
-    ....,
     NgGanttEditorModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+  ]
 })
 export class AppModule { }
 ```
-Then setup your component models as below :
+
+### 2. Set up your component
 
 ```ts
 import { Component, ViewChild } from '@angular/core';
@@ -52,41 +45,74 @@ import { GanttEditorComponent, GanttEditorOptions } from 'ng-gantt';
 export class AppComponent {
   public editorOptions: GanttEditorOptions;
   public data: any;
+
   @ViewChild(GanttEditorComponent, { static: true }) editor: GanttEditorComponent;
 
-  constructor() { 
-    this.editorOptions = new GanttEditorOptions()
-     this.data = [{
-      'pID': 1,
-      'pName': 'Define Chart API',
-      'pStart': '',
-      'pEnd': '',
-      'pClass': 'ggroupblack',
-      'pLink': '',
-      'pMile': 0,
-      'pRes': 'Brian',
-      'pComp': 0,
-      'pGroup': 1,
-      'pParent': 0,
-      'pOpen': 1,
-      'pDepend': '',
-      'pCaption': '',
-      'pNotes': 'Some Notes text'
-    }]; 
+  constructor() {
+    this.editorOptions = new GanttEditorOptions();
+    this.data = [
+      {
+        pID: 1,
+        pName: 'Define Chart API',
+        pStart: '',
+        pEnd: '',
+        pClass: 'ggroupblack',
+        pLink: '',
+        pMile: 0,
+        pRes: 'Brian',
+        pComp: 0,
+        pGroup: 1,
+        pParent: 0,
+        pOpen: 1,
+        pDepend: '',
+        pCaption: '',
+        pNotes: 'Some Notes text'
+      }
+    ];
   }
 }
 ```
-Note : For better styling, add below line to your main style.css file
 
-```ts
+### 3. Add styles
+
+In your `src/styles.css`:
+
+```css
 @import "~jsgantt-improved/dist/jsgantt.css";
 ```
 
-# Demo
+## Development
 
-Demo component files are included in Git Project.
+```bash
+# Install dependencies
+npm install
 
-When publishing it to npm, look over this docs: https://docs.npmjs.com/misc/developers
+# Build the library
+npm run build:lib
 
-# License
-MIT(./LICENSE)
+# Build and serve the demo app
+npm run reload
+```
+
+## Docs / GitHub Pages
+
+The `docs/` directory contains a standalone HTML demo served via GitHub Pages at
+[https://jsganttimproved.github.io/ng-gantt/](https://jsganttimproved.github.io/ng-gantt/).
+
+On every push to `master` the CI pipeline also builds the Angular demo app and
+deploys it to the `gh-pages` branch automatically.
+
+## CI / CD
+
+GitHub Actions handles:
+
+| Trigger | Jobs |
+|---|---|
+| Push / PR to `master` | Install → build library → build app |
+| Push to `master` | + Deploy Angular app to GitHub Pages (`gh-pages` branch) |
+
+See [`.github/workflows/ci.yml`](.github/workflows/ci.yml).
+
+## License
+
+[MIT](./LICENSE)
