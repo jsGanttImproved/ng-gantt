@@ -20,12 +20,5 @@
     "@angular/common": ">=8.0.0",
     "jsgantt-improved": "*"
   },
-  "ngPackage": {
-    "$schema": "./node_modules/ng-packagr/ng-package.schema.json",
-    
-    "lib": {
-      "entryFile": "src/public_api.ts"
-    },
-    "dest": "../dist/ng-gantt"
-  }
+  "ngPackagr": "ng-package.json"
 }
