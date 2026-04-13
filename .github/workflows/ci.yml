@@ -19,10 +19,11 @@ jobs:
         with:
           node-version: '18'
 
-      # package.json has inconsistent Angular versions (10.0.8, 19.x, ^9 ng-packagr)
-      # and TypeScript 3.9.7, but ng-packagr@11 requires TS >=4.0 <4.2.
-      # Patch direct deps AND devDeps to a consistent Angular 11 + TS 4.1 set.
-      - name: Pin Angular 11 + TypeScript 4.1 in package.json
+      # package.json has inconsistent Angular versions (10.0.8, 19.x, ^9 ng-packagr),
+      # TypeScript 3.9.7 (ng-packagr@11 needs >=4.0 <4.2), and webpack:"*" which
+      # resolves to v5 — but build-angular@0.900 uses webpack 4 APIs (ParserHelpers
+      # was removed in v5). Patch everything to a consistent Angular 11 set.
+      - name: Pin Angular 11 + TypeScript 4.1 + webpack 4 in package.json
         run: |
           node -e "
             const fs = require('fs');
@@ -36,6 +37,7 @@ jobs:
               if (pkg.dependencies && pkg.dependencies[p])    pkg.dependencies[p] = v;
               if (pkg.devDependencies && pkg.devDependencies[p]) pkg.devDependencies[p] = v;
             });
+            if (pkg.dependencies)    pkg.dependencies['webpack']         = '4.46.0';
             if (pkg.devDependencies) {
               pkg.devDependencies['ng-packagr']  = '11.2.0';
               pkg.devDependencies['typescript']  = '4.1.6';
