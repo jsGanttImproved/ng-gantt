@@ -87,7 +87,8 @@ export class GanttEditorComponent implements OnInit, OnDestroy {
   }
 
   public destroy() {
-    // this.editor.destroy();
+    this.ganttEditorContainer.nativeElement.innerHTML = '';
+    this.editor = null;
   }
 
   ngOnDestroy() {
