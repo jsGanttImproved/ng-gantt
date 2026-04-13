@@ -8,6 +8,7 @@ import { GanttEditorOptions } from './gantt.editoroptions';
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'ng-gantt',
+  standalone: false,
   template: '<div [id]="id" #ganttEditorContainer></div>'
 })
 export class GanttEditorComponent implements OnInit {
