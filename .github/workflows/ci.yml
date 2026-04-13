@@ -45,6 +45,9 @@ jobs:
               pkg.devDependencies['@angular-devkit/build-angular'] = '0.1102.19';
               pkg.devDependencies['@angular-devkit/schematics']    = '11.2.19';
             }
+            // source-map 0.8+ requires WASM init; pin transitive dep to last 0.7.x.
+            // Only safe as an override (not direct dep) to avoid EOVERRIDE conflict.
+            pkg.overrides = { 'source-map': '0.7.4' };
             delete pkg.overrides;
             fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));
           "
