@@ -28,6 +28,8 @@ export class GanttEditorComponent implements OnInit {
     this._data = value;
     if (this.editor) {
       this.destroy();
+    }
+    if (this.ganttEditorContainer) {
       this.ngOnInit();
     }
   }
@@ -86,7 +88,10 @@ export class GanttEditorComponent implements OnInit {
   }
 
   public destroy() {
-    // this.editor.destroy();
+    if (this.editor) {
+      this.ganttEditorContainer.nativeElement.innerHTML = '';
+      this.editor = null;
+    }
   }
 
   public getEditor(){
