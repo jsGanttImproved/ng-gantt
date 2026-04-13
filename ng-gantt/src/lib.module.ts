@@ -15,7 +15,7 @@ import { GanttEditorComponent } from './gantt/gantt.component';
 })
 export class NgGanttEditorModule {
 
-  public static forRoot(): ModuleWithProviders {
+  public static forRoot(): ModuleWithProviders<NgGanttEditorModule> {
 
     return {
       ngModule: NgGanttEditorModule,

@@ -1,0 +1,127 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    name: Build & Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      # package.json has inconsistent Angular versions (10.0.8, 19.x, ^9 ng-packagr),
+      # TypeScript 3.9.7 (ng-packagr@11 needs >=4.0 <4.2), and webpack:"*" which
+      # resolves to v5 — but build-angular@0.900 uses webpack 4 APIs (ParserHelpers
+      # was removed in v5). Patch everything to a consistent Angular 11 set.
+      - name: Pin Angular 11 + TypeScript 4.1 + webpack 4 in package.json
+        run: |
+          node -e "
+            const fs = require('fs');
+            const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+            const v = '11.2.14';
+            const ng = ['@angular/animations','@angular/common','@angular/compiler',
+                        '@angular/compiler-cli','@angular/core','@angular/forms',
+                        '@angular/platform-browser','@angular/platform-browser-dynamic',
+                        '@angular/router'];
+            ng.forEach(p => {
+              if (pkg.dependencies && pkg.dependencies[p])    pkg.dependencies[p] = v;
+              if (pkg.devDependencies && pkg.devDependencies[p]) pkg.devDependencies[p] = v;
+            });
+            if (pkg.dependencies)    pkg.dependencies['webpack']                       = '4.46.0';
+            if (pkg.devDependencies) {
+              pkg.devDependencies['ng-packagr']                    = '11.2.0';
+              pkg.devDependencies['typescript']                    = '4.1.6';
+              pkg.devDependencies['@angular/cli']                  = '11.2.19';
+              pkg.devDependencies['@angular-devkit/build-angular'] = '0.1102.19';
+              pkg.devDependencies['@angular-devkit/schematics']    = '11.2.19';
+            }
+            // source-map 0.8+ requires WASM init; pin transitive dep to last 0.7.x.
+            // Only safe as an override (not direct dep) to avoid EOVERRIDE conflict.
+            pkg.overrides = { 'source-map': '0.7.4' };
+            fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));
+          "
+
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: Build library
+        run: npm run build:lib
+
+      - name: Copy library for app
+        run: npm run copy
+
+      - name: Build demo app
+        run: npx ng build --prod --base-href /ng-gantt/
+        env:
+          NODE_OPTIONS: --openssl-legacy-provider
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Pin Angular 11 + TypeScript 4.1 + webpack 4 in package.json
+        run: |
+          node -e "
+            const fs = require('fs');
+            const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+            const v = '11.2.14';
+            const ng = ['@angular/animations','@angular/common','@angular/compiler',
+                        '@angular/compiler-cli','@angular/core','@angular/forms',
+                        '@angular/platform-browser','@angular/platform-browser-dynamic',
+                        '@angular/router'];
+            ng.forEach(p => {
+              if (pkg.dependencies && pkg.dependencies[p])    pkg.dependencies[p] = v;
+              if (pkg.devDependencies && pkg.devDependencies[p]) pkg.devDependencies[p] = v;
+            });
+            if (pkg.dependencies)    pkg.dependencies['webpack']                       = '4.46.0';
+            if (pkg.devDependencies) {
+              pkg.devDependencies['ng-packagr']                    = '11.2.0';
+              pkg.devDependencies['typescript']                    = '4.1.6';
+              pkg.devDependencies['@angular/cli']                  = '11.2.19';
+              pkg.devDependencies['@angular-devkit/build-angular'] = '0.1102.19';
+              pkg.devDependencies['@angular-devkit/schematics']    = '11.2.19';
+            }
+            pkg.overrides = { 'source-map': '0.7.4' };
+            fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));
+          "
+
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: Build library
+        run: npm run build:lib
+
+      - name: Copy library for app
+        run: npm run copy
+
+      - name: Build demo app for production
+        run: npx ng build --prod --base-href /ng-gantt/
+        env:
+          NODE_OPTIONS: --openssl-legacy-provider
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist/app
+          cname: ''
