@@ -19,11 +19,10 @@ jobs:
         with:
           node-version: '18'
 
-      # package.json has inconsistent Angular versions (10.0.8, 19.x, ^9 ng-packagr).
-      # Without a lockfile npm resolves wildcards to newest, pulling fesm2022 ESM
-      # modules that ng-packagr@9 (CJS require()) cannot load.
-      # Patch direct deps AND devDeps to a consistent Angular 11 set before install.
-      - name: Pin Angular 11 in package.json
+      # package.json has inconsistent Angular versions (10.0.8, 19.x, ^9 ng-packagr)
+      # and TypeScript 3.9.7, but ng-packagr@11 requires TS >=4.0 <4.2.
+      # Patch direct deps AND devDeps to a consistent Angular 11 + TS 4.1 set.
+      - name: Pin Angular 11 + TypeScript 4.1 in package.json
         run: |
           node -e "
             const fs = require('fs');
@@ -37,7 +36,10 @@ jobs:
               if (pkg.dependencies && pkg.dependencies[p])    pkg.dependencies[p] = v;
               if (pkg.devDependencies && pkg.devDependencies[p]) pkg.devDependencies[p] = v;
             });
-            if (pkg.devDependencies) pkg.devDependencies['ng-packagr'] = '11.2.0';
+            if (pkg.devDependencies) {
+              pkg.devDependencies['ng-packagr']  = '11.2.0';
+              pkg.devDependencies['typescript']  = '4.1.6';
+            }
             delete pkg.overrides;
             fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));
           "
@@ -68,7 +70,7 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Pin Angular 11 in package.json
+      - name: Pin Angular 11 + TypeScript 4.1 in package.json
         run: |
           node -e "
             const fs = require('fs');
@@ -82,7 +84,10 @@ jobs:
               if (pkg.dependencies && pkg.dependencies[p])    pkg.dependencies[p] = v;
               if (pkg.devDependencies && pkg.devDependencies[p]) pkg.devDependencies[p] = v;
             });
-            if (pkg.devDependencies) pkg.devDependencies['ng-packagr'] = '11.2.0';
+            if (pkg.devDependencies) {
+              pkg.devDependencies['ng-packagr']  = '11.2.0';
+              pkg.devDependencies['typescript']  = '4.1.6';
+            }
             delete pkg.overrides;
             fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));
           "
