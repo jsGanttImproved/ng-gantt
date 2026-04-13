@@ -29,7 +29,7 @@ jobs:
         run: npm run copy
 
       - name: Build demo app
-        run: npx ng build --configuration production --base-href /ng-gantt/
+        run: npx ng build dev --configuration production --base-href /ng-gantt/
 
   deploy:
     name: Deploy to GitHub Pages
@@ -55,7 +55,7 @@ jobs:
         run: npm run copy
 
       - name: Build demo app for production
-        run: npx ng build --configuration production --base-href /ng-gantt/
+        run: npx ng build dev --configuration production --base-href /ng-gantt/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3

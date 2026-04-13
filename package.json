@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "ng serve",
-    "build": "npm run copy && ng build",
+    "build": "npm run copy && ng build dev",
     "copy": "cp -R dist/ng-gantt src/ng-gantt",
     "build:app": "npm run copy && ng build --project packages && rimraf src/ng-gantt",
     "build:lib": "rimraf dist && ng-packagr -p ng-gantt/ng-package.json",
