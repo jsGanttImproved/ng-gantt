@@ -20,7 +20,13 @@ jobs:
           node-version: '18'
 
       - name: Install dependencies
-        run: npm install --legacy-peer-deps --force
+        run: npm install --legacy-peer-deps
+
+      # ng-packagr@9 (in package.json) uses CJS require() for @angular/compiler-cli,
+      # which breaks when Angular 14+ ESM modules land via transitive deps.
+      # Install the Angular-11-aligned toolchain explicitly to match the pinned deps.
+      - name: Install Angular 11 build toolchain
+        run: npm install ng-packagr@11 @angular/compiler-cli@11.2.14 --legacy-peer-deps --no-save
 
       - name: Build library
         run: npm run build:lib
@@ -46,7 +52,10 @@ jobs:
           node-version: '18'
 
       - name: Install dependencies
-        run: npm install --legacy-peer-deps --force
+        run: npm install --legacy-peer-deps
+
+      - name: Install Angular 11 build toolchain
+        run: npm install ng-packagr@11 @angular/compiler-cli@11.2.14 --legacy-peer-deps --no-save
 
       - name: Build library
         run: npm run build:lib
