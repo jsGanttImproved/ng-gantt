@@ -20,7 +20,7 @@
     "sass:rebuild": "npm rebuild node-sass"
   },
   "dependencies": {
-    "@angular/common": "19.2.18",
+    "@angular/common": "20.3.27",
     "@angular/compiler": "19.2.18",
     "@angular/core": "19.2.18",
     "@angular/forms": "19.2.18",
